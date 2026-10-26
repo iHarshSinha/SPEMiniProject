@@ -1,0 +1,37 @@
+
+services:
+  calculator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: calculator-api:local
+    environment:
+      SERVER_PORT: "8080"
+    expose:
+      - "8080"
+    networks:
+      - calculator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://localhost:8080/actuator/health | grep -q '\"status\":\"UP\"'"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 30s
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - calculator-network
+    depends_on:
+      calculator:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  calculator-network:
+    driver: bridge
