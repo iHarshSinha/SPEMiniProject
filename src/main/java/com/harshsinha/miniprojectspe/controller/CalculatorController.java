@@ -3,6 +3,7 @@ package com.harshsinha.miniprojectspe.controller;
 
 import com.harshsinha.miniprojectspe.dto.CalculatorResponse;
 import com.harshsinha.miniprojectspe.service.CalculatorService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,42 +22,50 @@ public class CalculatorController {
     }
 
     @GetMapping("/add")
-    public CalculatorResponse add(
+    public ResponseEntity<CalculatorResponse> add(
             @RequestParam BigDecimal a,
             @RequestParam BigDecimal b
     ) {
-        return new CalculatorResponse(
-                "add", a, b, calculatorService.add(a, b)
+        BigDecimal result = calculatorService.add(a, b);
+
+        return ResponseEntity.ok(
+                new CalculatorResponse("add", a, b, result)
         );
     }
 
     @GetMapping("/subtract")
-    public CalculatorResponse subtract(
+    public ResponseEntity<CalculatorResponse> subtract(
             @RequestParam BigDecimal a,
             @RequestParam BigDecimal b
     ) {
-        return new CalculatorResponse(
-                "subtract", a, b, calculatorService.subtract(a, b)
+        BigDecimal result = calculatorService.subtract(a, b);
+
+        return ResponseEntity.ok(
+                new CalculatorResponse("subtract", a, b, result)
         );
     }
 
     @GetMapping("/multiply")
-    public CalculatorResponse multiply(
+    public ResponseEntity<CalculatorResponse> multiply(
             @RequestParam BigDecimal a,
             @RequestParam BigDecimal b
     ) {
-        return new CalculatorResponse(
-                "multiply", a, b, calculatorService.multiply(a, b)
+        BigDecimal result = calculatorService.multiply(a, b);
+
+        return ResponseEntity.ok(
+                new CalculatorResponse("multiply", a, b, result)
         );
     }
 
     @GetMapping("/divide")
-    public CalculatorResponse divide(
+    public ResponseEntity<CalculatorResponse> divide(
             @RequestParam BigDecimal a,
             @RequestParam BigDecimal b
     ) {
-        return new CalculatorResponse(
-                "divide", a, b, calculatorService.divide(a, b)
+        BigDecimal result = calculatorService.divide(a, b);
+
+        return ResponseEntity.ok(
+                new CalculatorResponse("divide", a, b, result)
         );
     }
 }
