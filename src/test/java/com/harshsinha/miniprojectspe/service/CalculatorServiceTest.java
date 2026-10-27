@@ -78,4 +78,13 @@ class CalculatorServiceTest {
                 )
         );
     }
+    @Test
+    void simpleAddition(){
+        assertEquals(
+                BigDecimal.TEN,
+                calculatorService.multiply(new BigDecimal("5"),
+                        new BigDecimal("2")
+                        )
+        );
+    }
 }
