@@ -92,7 +92,7 @@ All calculator endpoints use **HTTP GET** and require two query parameters: `a` 
 ### Example request
 
 ```bash
-curl -i "http://localhost:8080/api/v1/add?a=2&b=3"
+curl -i "http://localhost:8081/api/v1/add?a=2&b=3"
 ```
 
 Example successful response (`200 OK`):
@@ -129,7 +129,7 @@ Common client errors return **`400 Bad Request`**.
 **Division by zero**
 
 ```bash
-curl -i "http://localhost:8080/api/v1/divide?a=6&b=0"
+curl -i "http://localhost:8081/api/v1/divide?a=6&b=0"
 ```
 
 The message is `Division by zero is not allowed`.
@@ -137,7 +137,7 @@ The message is `Division by zero is not allowed`.
 **Missing parameter**
 
 ```bash
-curl -i "http://localhost:8080/api/v1/add?a=2"
+curl -i "http://localhost:8081/api/v1/add?a=2"
 ```
 
 The message identifies the missing parameter, for example `Missing required parameter: b`.
@@ -145,7 +145,7 @@ The message identifies the missing parameter, for example `Missing required para
 **Invalid numeric parameter**
 
 ```bash
-curl -i "http://localhost:8080/api/v1/add?a=abc&b=2"
+curl -i "http://localhost:8081/api/v1/add?a=abc&b=2"
 ```
 
 The message identifies the parameter that must be a valid number.
@@ -157,7 +157,7 @@ Unexpected server errors are logged by the application and return **`500 Interna
 Spring Boot Actuator exposes the health endpoint at:
 
 ```bash
-curl -i "http://localhost:8080/actuator/health"
+curl -i "http://localhost:8081/actuator/health"
 ```
 
 A healthy running application returns `200 OK` with a JSON status of `UP`.
@@ -281,7 +281,7 @@ The pipeline follows this sequence:
 3. **Test:** Jenkins runs the test suite and publishes the JUnit XML reports.
 4. **Docker Build:** Jenkins reads the Dockerfile and builds the calculator image.
 5. **Docker Push:** Jenkins authenticates to Docker Hub using credentials stored in Jenkins and pushes both a build-number tag and the `latest` tag.
-6. **Deploy:** Jenkins exports the current build number as `IMAGE_TAG`, pulls the corresponding image through Docker Compose, and starts or updates the services.
+6. **Deploy:** Jenkins exports the rent build number as `IMAGE_TAG`, pulls the corresponding image through Docker Compose, and starts or updates the services.
 7. **Health Check:** Jenkins checks the application through Nginx at `http://localhost:8081/actuator/health`.
 8. **Email Notification:** Jenkins sends a notification containing the build status and console output URL.
 
