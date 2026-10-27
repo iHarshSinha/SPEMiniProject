@@ -57,5 +57,38 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            steps {
+                sh '''
+                    set -eu
+
+                    export IMAGE_TAG="${BUILD_NUMBER}"
+
+                    echo "Deploying image: iharshsinha/calculator-api:${IMAGE_TAG}"
+
+                    docker compose config
+                    docker compose pull calculator
+                    docker compose up -d --no-build
+
+                    echo "Waiting for calculator health..."
+
+                    for i in $(seq 1 30); do
+                        if curl --fail --silent \
+                            http://localhost:8081/actuator/health \
+                            | grep -q '"status":"UP"'; then
+                            echo "Calculator is healthy."
+                            exit 0
+                        fi
+
+                        sleep 2
+                    done
+
+                    echo "Health check failed."
+                    docker compose ps
+                    docker compose logs --tail=100 calculator nginx
+                    exit 1
+                '''
+            }
+        }
     }
 }
