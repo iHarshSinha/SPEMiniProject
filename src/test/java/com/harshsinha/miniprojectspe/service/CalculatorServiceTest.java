@@ -68,4 +68,14 @@ class CalculatorServiceTest {
                 )
         );
     }
+    @Test
+    void shouldReturnZeroWhenMultiplyingByZero() {
+        assertEquals(
+                BigDecimal.ZERO,
+                calculatorService.multiply(
+                        new BigDecimal("125"),
+                        BigDecimal.ZERO
+                )
+        );
+    }
 }
