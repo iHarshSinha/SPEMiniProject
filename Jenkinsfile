@@ -57,6 +57,7 @@ pipeline {
                 }
             }
         }
+
         stage('Deploy') {
             steps {
                 sh '''
@@ -64,7 +65,7 @@ pipeline {
 
                     export IMAGE_TAG="${BUILD_NUMBER}"
 
-                    echo "Deploying image: iharshsinha/calculator-api:${IMAGE_TAG}"
+                    echo "Deploying image: ${DOCKER_IMAGE}:${IMAGE_TAG}"
 
                     docker compose config
                     docker compose pull calculator
@@ -89,6 +90,24 @@ pipeline {
                     exit 1
                 '''
             }
+        }
+    }
+
+    post {
+        always {
+            emailext(
+                to: 'YOUR_GMAIL_ADDRESS',
+                subject: "${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """\
+Build status: ${currentBuild.currentResult}
+
+Job: ${env.JOB_NAME}
+Build number: ${env.BUILD_NUMBER}
+
+Console output: ${env.BUILD_URL}console
+""",
+                mimeType: 'text/plain'
+            )
         }
     }
 }
