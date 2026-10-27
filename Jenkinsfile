@@ -96,7 +96,7 @@ pipeline {
     post {
         always {
             emailext(
-                to: 'YOUR_GMAIL_ADDRESS',
+                to: 'harshsinhaed@gmail.com',
                 subject: "${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """\
 Build status: ${currentBuild.currentResult}
