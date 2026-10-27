@@ -79,9 +79,9 @@ class CalculatorServiceTest {
         );
     }
     @Test
-    void simpleAddition() {
+    void simpleMultiplication() {
         assertEquals(
-                BigDecimal.ZERO,
+                BigDecimal.TEN,
                 calculatorService.multiply(
                         new BigDecimal("5"),
                         new BigDecimal("2")
