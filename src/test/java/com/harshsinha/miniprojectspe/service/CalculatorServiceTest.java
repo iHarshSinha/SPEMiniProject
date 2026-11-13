@@ -80,6 +80,7 @@ class CalculatorServiceTest {
     }
     @Test
     void simpleMultiplication() {
+        // adding comment to make sure everything is running before viva
         assertEquals(
                 BigDecimal.TEN,
                 calculatorService.multiply(
